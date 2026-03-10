@@ -472,14 +472,14 @@ function IndustryTab() {
         <div className="relative">
           <div className="flex items-stretch gap-0.5 mb-2">
             {[
-              { t: "Subsidized", c: "bg-red-600", tc: "text-white", p: "Very Low" },
-              { t: "Perfect", c: "bg-red-400", tc: "text-slate-900", p: "Low" },
-              { t: "Hyper", c: "bg-amber-400", tc: "text-slate-900", p: "Low-Med" },
-              { t: "Segmented", c: "bg-amber-500", tc: "text-white", p: "Varies" },
-              { t: "Oligopoly", c: "bg-green-400", tc: "text-slate-900", p: "Pot. High" },
-              { t: "Monopoly", c: "bg-green-600", tc: "text-white", p: "High" },
+              { t: "Subsidized", c: "bg-red-600", p: "Very Low" },
+              { t: "Perfect", c: "bg-red-400", p: "Low" },
+              { t: "Hyper", c: "bg-amber-400", p: "Low-Med" },
+              { t: "Segmented", c: "bg-amber-500", p: "Varies" },
+              { t: "Oligopoly", c: "bg-green-400", p: "Pot. High" },
+              { t: "Monopoly", c: "bg-green-600", p: "High" },
             ].map((s, i) => (
-              <div key={s.t} className={`${s.c} ${s.tc} text-center flex-1 py-3 ${i === 0 ? 'rounded-l-lg' : ''} ${i === 5 ? 'rounded-r-lg' : ''}`}>
+              <div key={s.t} className={`${s.c} text-white text-center flex-1 py-3 ${i === 0 ? 'rounded-l-lg' : ''} ${i === 5 ? 'rounded-r-lg' : ''}`}>
                 <div className="font-bold text-xs">{s.t}</div>
                 <div className="text-xs opacity-80">{s.p}</div>
               </div>
