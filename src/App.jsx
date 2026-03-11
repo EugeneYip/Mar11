@@ -31,15 +31,20 @@ function Expandable({ items, color, border }) {
 const IH = ({ children }) => <div style={{fontSize:18,fontWeight:800,textAlign:"center",color:"#0f172a",marginBottom:2}}>{children}</div>;
 const ISub = ({ children }) => <p style={{fontSize:12,color:"#94a3b8",margin:"0 0 14px",textAlign:"center",fontStyle:"italic"}}>{children}</p>;
 
-/* ─── INTERACTIVE PENTAGON ─── */
+/* ─── INTERACTIVE PENTAGON ───
+   ★ STRUCTURAL CHANGE #1: Analysis sequence reordered to
+   Industry → Meso → Macro → Meta → Firm
+   (Professor Enright's preferred classroom sequence)
+   Pentagon GEOMETRY unchanged; card listing order changed.
+─── */
 function InteractivePentagon() {
   const [hover, setHover] = useState(null);
   const levels = [
-    { key:"macro",n:1,pentIdx:0,title:"Macro 國家",sub:"National environment",items:["Macroeconomics","National Resources & Capabilities","Gov't Policies","Institutions","Civil Society"],col:PC.macro },
-    { key:"supra",n:2,pentIdx:4,title:"Meta 超國家",sub:"Global & international forces",items:["Geopolitics","Global Tech","Global Economics","Social/Env Issues","Multilateral Orgs","Trade Blocs","Foreign Gov'ts","Int'l Financial Flows","Foreign MNCs","Other Groups"],col:PC.supra },
-    { key:"meso",n:3,pentIdx:1,title:"Meso 群聚",sub:"Cluster & value chain ecosystem",items:["Inputs & Suppliers","Demand & Customers","Shared Resources","Shared Activities","Complementarities","Substitutes","Meso Policies","Meso Institutions"],col:PC.meso },
-    { key:"industry",n:4,pentIdx:2,title:"Micro 產業",sub:"Competitive landscape",items:["Industry Characteristics","Competition","Cooperation","Strategic Groups","Lead Firms","Micro Policies","Micro Institutions"],col:PC.industry },
-    { key:"firm",n:5,pentIdx:3,title:"Firm 企業",sub:"Internal strategy & execution",col:PC.firm,dual:{left:{heading:"Strategy (SPARK+L)",items:["Scope","Positioning","Activities","Resources","Knowledge","Leadership"]},right:{heading:"Execution",items:["Org & Mgmt","Governance","Firm Policies","Firm Institutions"]}}},
+    { key:"industry",n:1,pentIdx:2,title:"① Industry 產業",sub:"Competitive landscape — START HERE 從這裡開始",items:["Industry Characteristics","Competition","Cooperation","Strategic Groups","Lead Firms","Micro Policies","Micro Institutions"],col:PC.industry },
+    { key:"meso",n:2,pentIdx:1,title:"② Meso 群聚",sub:"Cluster & value chain ecosystem",items:["Inputs & Suppliers","Demand & Customers","Shared Resources","Shared Activities","Complementarities","Substitutes","Meso Policies","Meso Institutions"],col:PC.meso },
+    { key:"macro",n:3,pentIdx:0,title:"③ Macro 國家",sub:"National environment",items:["Macroeconomics","National Resources & Capabilities","Gov't Policies","Institutions","Civil Society"],col:PC.macro },
+    { key:"supra",n:4,pentIdx:4,title:"④ Meta 超國家",sub:"Global & international forces",items:["Geopolitics","Global Tech","Global Economics","Social/Env Issues","Multilateral Orgs","Trade Blocs","Foreign Gov'ts","Int'l Financial Flows","Foreign MNCs","Other Groups"],col:PC.supra },
+    { key:"firm",n:5,pentIdx:3,title:"⑤ Firm 企業",sub:"Internal strategy & execution — END HERE 最後才到這裡",col:PC.firm,dual:{left:{heading:"Strategy (SPARK+L)",items:["Scope","Positioning","Activities","Resources","Knowledge","Leadership"]},right:{heading:"Execution",items:["Org & Mgmt","Governance","Firm Policies","Firm Institutions"]}}},
   ];
 
   const cx=150,cy=148,r=115;
@@ -51,7 +56,7 @@ function InteractivePentagon() {
 
   return (<div>
     <IH>Drivers of Firm Performance 企業績效驅動因素</IH>
-    <ISub>Interactive: hover/tap levels to highlight · 互動式：懸停或點擊各層級</ISub>
+    <ISub>分析順序：Industry → Meso → Macro → Meta → Firm（教授課堂順序）</ISub>
     <div style={{background:"#fff",borderRadius:16,padding:16,boxShadow:"0 4px 20px rgba(0,0,0,0.06)",marginBottom:14,display:"flex",justifyContent:"center"}}>
       <svg viewBox="0 0 300 296" style={{width:"100%",maxWidth:300,height:"auto"}}>
         <defs><radialGradient id="fpg" cx="50%" cy="48%" r="55%"><stop offset="0%" stopColor="#fff"/><stop offset="100%" stopColor="#f1f5f9"/></radialGradient><filter id="fpds"><feDropShadow dx="0" dy="3" stdDeviation="4" floodOpacity="0.1"/></filter></defs>
@@ -63,6 +68,11 @@ function InteractivePentagon() {
         <text x={cx} y={cy-3} textAnchor="middle" fontSize="10" fontWeight="600" fill="#94a3b8">Firm</text>
         <text x={cx} y={cy+10} textAnchor="middle" fontSize="12" fontWeight="800" fill="#0f172a">Performance</text>
       </svg>
+    </div>
+    {/* Analysis sequence banner */}
+    <div style={{background:"linear-gradient(135deg,#1e293b,#334155)",borderRadius:12,padding:"12px 16px",marginBottom:12,display:"flex",alignItems:"center",justifyContent:"center",gap:6,flexWrap:"wrap"}}>
+      {["Industry","→","Meso","→","Macro","→","Meta","→","Firm"].map((s,i)=>s==="→"?<span key={i} style={{color:"#94a3b8",fontSize:16}}>→</span>:<span key={i} style={{color:i===0?"#fbbf24":"#e2e8f0",fontSize:13,fontWeight:i===0?800:600,background:i===0?"rgba(251,191,36,0.15)":"transparent",padding:i===0?"2px 8px":"0",borderRadius:6}}>{s}</span>)}
+      <span style={{color:"#94a3b8",fontSize:11,marginLeft:8}}>教授分析順序</span>
     </div>
     <div style={{display:"flex",flexDirection:"column",gap:8}}>
       {levels.map(lv=>{const isH=hover===lv.key;return(
@@ -91,7 +101,7 @@ function InteractiveFirmLevel() {
 
   return (<div>
     <IH>Firm Level Drivers 企業層級驅動因素</IH>
-    <ISub>Tap any item for description · 點擊任何項目查看說明</ISub>
+    <ISub>點擊任何項目查看說明 · Tap any item for description</ISub>
     <div style={{display:"flex",flexWrap:"wrap",gap:12}}>
       <div style={{flex:"1 1 200px",minWidth:0}}>
         <div style={{fontSize:11,fontWeight:700,color:PC.firm.dark,textTransform:"uppercase",letterSpacing:1,marginBottom:8,paddingLeft:4}}>Strategy (SPARK+L)</div>
@@ -105,11 +115,36 @@ function InteractiveFirmLevel() {
   </div>);
 }
 
-/* ─── INTERACTIVE WHAT IS INDUSTRY ─── */
+/* ─── INTERACTIVE WHAT IS INDUSTRY ───
+   ★ STRUCTURAL CHANGE #2: Expanded with 3-step "useful output" methodology
+─── */
 function InteractiveWhatIsIndustry() {
   return (<div style={{marginBottom:16}}>
     <IH>What Constitutes an Industry? 何謂產業？</IH>
-    <ISub>Defining the boundaries of competition 界定競爭的範圍</ISub>
+    <ISub>這是整個 Five Levels 分析的錨點——定義錯，後面全錯</ISub>
+
+    {/* ★ NEW: 3-step useful output methodology */}
+    <div style={{background:"linear-gradient(135deg,#1e40af,#2563eb)",borderRadius:14,padding:"18px 16px",marginBottom:14,color:"#fff",boxShadow:"0 4px 20px rgba(37,99,235,0.2)"}}>
+      <div style={{fontSize:15,fontWeight:800,textAlign:"center",marginBottom:12}}>「有用輸出」三步定義法 The "Useful Output" Method</div>
+      <div style={{display:"flex",flexDirection:"column",gap:10}}>
+        {[
+          {n:"1",title:"客戶實際收到什麼？",sub:"What useful output does the customer receive?",detail:"不看技術、不看產業代碼，只看最終到達客戶手中的產品或服務的形式與功能。",ex:"手機用戶收到的是：行動通訊 + 應用程式 + 隨身運算"},
+          {n:"2",title:"誰在直接爭奪這個客戶？",sub:"Who competes directly for that customer?",detail:"提供相同有用輸出的所有企業，無論底層技術或商業模式多不同，都在同一產業。",ex:"iOS 與 Android：軟體工程完全不同，但客戶收到同樣的有用輸出 → 同一產業"},
+          {n:"3",title:"劃定產業邊界",sub:"Draw the industry boundary",detail:"不同有用輸出 = 不同產業。即便企業都被歸類為「科技」，只要主業輸出不同就不是同產業。",ex:"Amazon（物流/零售）、Microsoft（生產力工具）、Meta（社群媒體）→ 三個不同產業"},
+        ].map(step=>(
+          <div key={step.n} style={{background:"rgba(255,255,255,0.12)",borderRadius:10,padding:"12px 14px",borderLeft:"3px solid rgba(255,255,255,0.5)"}}>
+            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
+              <span style={{background:"#fff",color:"#1e40af",width:22,height:22,borderRadius:"50%",display:"inline-flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:800,flexShrink:0}}>{step.n}</span>
+              <div><div style={{fontWeight:700,fontSize:14}}>{step.title}</div><div style={{fontSize:11,color:"rgba(255,255,255,0.7)"}}>{step.sub}</div></div>
+            </div>
+            <div style={{fontSize:12,color:"rgba(255,255,255,0.9)",lineHeight:1.6,paddingLeft:30,marginBottom:4}}>{step.detail}</div>
+            <div style={{fontSize:11,color:"#fbbf24",paddingLeft:30,fontStyle:"italic"}}>例：{step.ex}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Original "includes" section */}
     <div style={{background:"#fff",borderRadius:14,border:"2px solid #2563eb22",padding:"16px 14px",marginBottom:12,boxShadow:"0 2px 12px rgba(37,99,235,0.06)"}}>
       <div style={{display:"flex",alignItems:"center",marginBottom:10}}>
         <div style={{width:26,height:26,borderRadius:8,background:"linear-gradient(135deg,#2563eb,#3b82f6)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:13,fontWeight:700,marginRight:10,flexShrink:0}}>✓</div>
@@ -143,7 +178,7 @@ function InteractiveIndustryDetail() {
   ];
   return (<div style={{marginBottom:16}}>
     <IH>Industry Drivers — Interactive Detail 產業驅動因素——互動詳解</IH>
-    <ISub>Tap each category to expand · 點擊展開各類別</ISub>
+    <ISub>點擊展開各類別 · Tap each category to expand</ISub>
     <div style={{display:"flex",flexDirection:"column",gap:6}}>
       {sections.map(sec=>{const on=open===sec.key;return(
         <div key={sec.key} onClick={()=>setOpen(on?null:sec.key)} style={{background:on?`${sec.color}08`:"#fff",border:`1.5px solid ${on?sec.color+"44":"#e5e7eb"}`,borderRadius:12,padding:"12px 14px",cursor:"pointer",boxShadow:on?`0 4px 14px ${sec.color}10`:"0 1px 3px rgba(0,0,0,0.03)",transition:"all 0.25s ease"}}>
@@ -177,7 +212,7 @@ function InteractiveCompetition() {
 
   return (<div style={{marginBottom:16}}>
     <IH>Types of Competition 競爭類型</IH>
-    <ISub>Tap each type to see characteristics · 點擊查看特徵</ISub>
+    <ISub>點擊查看特徵 · Tap each type to see characteristics</ISub>
     <div style={{display:"flex",flexDirection:"column",gap:6,marginBottom:16}}>
       {types.map(t=>{const on=exp===t.key;return(
         <div key={t.key} onClick={()=>setExp(on?null:t.key)} style={{display:"flex",alignItems:"flex-start",gap:12,padding:"12px 14px",borderRadius:12,cursor:"pointer",background:on?`${t.color}08`:"#fff",border:`1.5px solid ${on?t.color+"44":"#e5e7eb"}`,boxShadow:on?`0 4px 14px ${t.color}10`:"0 1px 3px rgba(0,0,0,0.03)",transition:"all 0.25s ease"}}>
@@ -194,7 +229,7 @@ function InteractiveCompetition() {
     </div>
     <div style={{background:"#fff",borderRadius:14,border:"1.5px solid #e2e8f0",padding:"18px 12px",boxShadow:"0 2px 12px rgba(0,0,0,0.04)"}}>
       <div style={{fontSize:15,fontWeight:700,textAlign:"center",color:"#0f172a",marginBottom:4}}>Where is the Industry? 產業在哪裡？</div>
-      <p style={{fontSize:11,color:"#94a3b8",textAlign:"center",margin:"0 0 10px"}}>Position your industry on the spectrum 將你的產業定位在光譜上</p>
+      <p style={{fontSize:11,color:"#94a3b8",textAlign:"center",margin:"0 0 10px"}}>將你的產業定位在光譜上 Position your industry on the spectrum</p>
       <svg viewBox="0 0 500 80" style={{width:"100%",height:"auto"}}>
         <defs><linearGradient id="cgrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stopColor="#dc2626"/><stop offset="30%" stopColor="#d97706"/><stop offset="60%" stopColor="#475569"/><stop offset="80%" stopColor="#2563eb"/><stop offset="100%" stopColor="#7c3aed"/></linearGradient></defs>
         <rect x="30" y="18" width="440" height="6" rx="3" fill="#e2e8f0"/>
@@ -203,6 +238,65 @@ function InteractiveCompetition() {
         <text x="30" y="70" fontSize="9" fill="#94a3b8">← 競爭多 More competition</text>
         <text x="470" y="70" fontSize="9" fill="#94a3b8" textAnchor="end">Less competition 競爭少 →</text>
       </svg>
+    </div>
+  </div>);
+}
+
+/* ─── NEW: INTERACTIVE INDUSTRY ECONOMICS ───
+   ★ STRUCTURAL CHANGE #3: Dynamic industry economics analysis
+   Not "what are current margins" but "why is profit structurally possible"
+─── */
+function InteractiveIndustryEconomics() {
+  const [open, setOpen] = useState(null);
+  const questions = [
+    { key:"why", title:"Why is profit POSSIBLE here? 利潤為何在此產業有可能存在？", color:"#059669", border:"#a7f3d0",
+      items:[
+        "Which departures from perfect competition exist? 存在哪些偏離完全競爭的條件？",
+        "Entry barriers: scale, learning, scope, brands, patents, regulation, retaliation 進入障礙有哪些？",
+        "Exit barriers: specialized assets, strategic/emotional barriers, exit costs 退出障礙有哪些？",
+        "Information asymmetries between firms and/or customers 企業與客戶之間的資訊不對稱？",
+        "Are products differentiable or homogeneous? 產品可區分還是同質？",
+      ]},
+    { key:"where", title:"Where does profit COME FROM? 利潤的來源是什麼？", color:"#2563eb", border:"#bfdbfe",
+      items:[
+        "Price premiums from differentiation (brand, quality, features)? 差異化帶來的價格溢價？",
+        "Cost advantages from scale, learning, scope, or resource access? 規模、學習、範圍或資源取得帶來的成本優勢？",
+        "Customer switching costs or lock-in? 客戶的轉換成本或鎖定效應？",
+        "Regulatory protection or government policies? 法規保護或政府政策？",
+        "Network effects or platform dynamics? 網路效應或平台動態？",
+        "Control of scarce inputs, distribution, or complementary assets? 稀缺投入、配銷或互補資產的控制？",
+      ]},
+    { key:"shift", title:"What SHIFTS would change the profit structure? 哪些變動會改變利潤結構？", color:"#dc2626", border:"#fecaca",
+      items:[
+        "New entrants overcoming barriers (technology change, regulation change)? 新進者克服障礙（技術變革、法規變革）？",
+        "Substitutes emerging from adjacent industries? 鄰近產業出現替代品？",
+        "Buyer or supplier power shifting (consolidation, vertical integration)? 買方或供應商權力變化？",
+        "Competition type migrating on the spectrum (e.g., oligopoly → hypercompetition)? 競爭類型在光譜上遷移？",
+        "Macro/Meta forces disrupting the structure (trade policy, technology waves, geopolitics)? 宏觀/超國家力量衝擊結構？",
+        "Lead firms changing strategy or new lead firms emerging? 領導企業策略改變或新領導企業出現？",
+      ]},
+  ];
+
+  return (<div style={{marginBottom:16}}>
+    <IH>Industry Economics 產業經濟學</IH>
+    <ISub>不是靜態描述現況——而是利潤結構如何成形、為何持續、何時改變</ISub>
+    <div style={{background:"#fef2f2",border:"2px solid #dc262622",borderRadius:14,padding:"12px 14px",marginBottom:12}}>
+      <div style={{fontSize:13,fontWeight:700,color:"#991b1b",textAlign:"center",marginBottom:4}}>⚠️ 常見錯誤 Common Mistake</div>
+      <div style={{display:"flex",gap:8,flexWrap:"wrap",justifyContent:"center"}}>
+        <div style={{background:"#fff",border:"1px solid #fca5a5",borderRadius:8,padding:"6px 12px",fontSize:12}}><span style={{color:"#dc2626",fontWeight:700}}>✗</span> 把 Industry Economics 當成「現在利潤率多少」</div>
+        <div style={{background:"#fff",border:"1px solid #86efac",borderRadius:8,padding:"6px 12px",fontSize:12}}><span style={{color:"#16a34a",fontWeight:700}}>✓</span> 問「利潤為何結構性地有可能？從哪來？什麼會改變它？」</div>
+      </div>
+    </div>
+    <div style={{display:"flex",flexDirection:"column",gap:8}}>
+      {questions.map(q=>{const on=open===q.key;return(
+        <div key={q.key} onClick={()=>setOpen(on?null:q.key)} style={{background:on?`${q.color}06`:"#fff",border:`1.5px solid ${on?q.color+"44":"#e5e7eb"}`,borderRadius:12,padding:"12px 14px",cursor:"pointer",boxShadow:on?`0 4px 14px ${q.color}10`:"0 1px 3px rgba(0,0,0,0.03)",transition:"all 0.25s ease"}}>
+          <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+            <span style={{fontSize:14,fontWeight:700,color:on?q.color:"#374151",transition:"color 0.2s",flex:1}}>{q.title}</span>
+            <span style={{fontSize:14,color:"#94a3b8",transform:on?"rotate(180deg)":"rotate(0deg)",transition:"transform 0.25s",display:"inline-block",flexShrink:0,marginLeft:8}}>▾</span>
+          </div>
+          {on && <Expandable items={q.items} color={q.color} border={q.border}/>}
+        </div>
+      );})}
     </div>
   </div>);
 }
@@ -252,11 +346,8 @@ function Overview() {
 
 function FiveLevels() {
   return (<div>
-    <SectionTitle cn="五層架構——互動圖表 + 詳細參考">The Five-Level Framework</SectionTitle>
-
-    {/* ★ INTERACTIVE PENTAGON ★ */}
+    <SectionTitle cn="五層架構——依教授課堂分析順序排列">The Five-Level Framework</SectionTitle>
     <div className="mb-6"><InteractivePentagon /></div>
-
     <Card title="Three Critical Insights (Ch.2)" cn="三大洞察" color="blue">
       <div className="grid grid-cols-3 gap-2">
         {[["Systemic 系統性","Levels interdependent; changes cascade"],["Changing 持續變動","Must project forward, not snapshot"],["Interdependent 相互依存","Favorable macro ≠ firm success if micro/firm unfavorable"]].map(([t,d])=>(<div key={t} className="bg-white border rounded p-3 text-center"><div className="font-bold text-blue-700 text-sm mb-1">{t}</div><div className="text-xs text-slate-600">{d}</div></div>))}
@@ -276,10 +367,7 @@ function FiveLevels() {
 function SparkPosition() {
   return (<div>
     <SectionTitle cn="SPARK 架構與定位分析">SPARK Model & Positioning</SectionTitle>
-
-    {/* ★ INTERACTIVE FIRM LEVEL ★ */}
     <div className="mb-6 bg-white rounded-xl p-4 border border-slate-200"><InteractiveFirmLevel /></div>
-
     <div className="bg-gradient-to-br from-green-800 to-green-900 text-white rounded-xl p-5 mb-4">
       <div className="text-center font-bold text-xl mb-1">Strategy = SPARK</div>
       <div className="text-center text-green-300 text-xs mb-4">Ch.3 — The core firm-level analytical tool</div>
@@ -293,7 +381,6 @@ function SparkPosition() {
       </div>
       <div className="mt-2 text-center text-xs text-green-300">High-performing firms often have a distinctive SPARK.</div>
     </div>
-
     <Card title="Positioning: The Full Picture (Ch.3)" cn="定位分析——最容易考、最容易寫錯" color="red">
       <div className="bg-red-50 border border-red-200 rounded p-3 mb-3 text-center">
         <div className="font-bold text-red-700">You CANNOT judge positioning from:</div>
@@ -305,42 +392,29 @@ function SparkPosition() {
       </div>
       <div className="text-xs text-slate-600">Why not all Firm D? Smart competitors + inherent tradeoffs. Exceptions: IP as standard (Microsoft), massive scale (Intel), resource advantages (Saudi Aramco), platform (Google/Facebook).</div>
     </Card>
-
     <Card title="A-R-K Advantage Logic" cn="活動-資源-知識的優勢邏輯" color="purple">
       <div className="space-y-2"><div className="bg-red-50 border-l-2 border-red-400 p-2 text-xs"><strong>NOT enough:</strong> "We are better at marketing"</div><div className="bg-green-50 border-l-2 border-green-400 p-2 text-xs"><strong>IS enough:</strong> "We are better at marketing <em>and therefore customers pay us a price premium</em>"</div></div>
       <div className="mt-3 grid grid-cols-3 gap-2 text-center text-xs"><div className="bg-purple-100 rounded p-2"><strong>Individual</strong> A, R, or K</div><div className="bg-purple-200 rounded p-2"><strong>Combinations</strong> of A+R+K</div><div className="bg-purple-300 rounded p-2"><strong>Systems</strong> (hardest to imitate)</div></div>
     </Card>
-
     <Card title="Time Dimension (Ch.3)" cn="策略的時間面向" color="cyan">
       <div className="grid grid-cols-3 gap-2 text-xs">
         {[{t:"Commitment",d:"Large investment → long-term advantage",ex:"Chemicals, pharma, oil, mining"},{t:"Hustle",d:"Stream of temporary advantages, move fast",ex:"Motion pictures, fashion, trading, some tech"},{t:"Real Options",d:"Stay in game without big commitment",ex:"High uncertainty + irreversibility"}].map(s=>(<div key={s.t} className="bg-white border rounded p-3"><div className="font-bold text-cyan-700">{s.t}</div><div className="mt-1">{s.d}</div><div className="mt-1 text-slate-500 italic">{s.ex}</div></div>))}
       </div>
-      <div className="mt-2 text-xs text-slate-500"><strong>Time pacing:</strong> New products on set schedule. Fashion 2x/yr; PC every 6 mo.</div>
     </Card>
-
     <Card title="General vs. Specific Competitive Advantages (Ch.3)" cn="一般性 vs. 特定性競爭優勢" color="amber">
       <div className="grid grid-cols-2 gap-3 text-xs">
         <div className="bg-amber-50 border rounded p-3"><div className="font-bold text-amber-700 mb-1">General 一般性</div><div>Built up over time: R&D capabilities, brands, manufacturing excellence.</div></div>
         <div className="bg-amber-50 border rounded p-3"><div className="font-bold text-amber-700 mb-1">Specific 特定性</div><div>Why the company succeeds or fails TODAY in a specific industry, with specific customers, against specific competitors.</div></div>
       </div>
-      <div className="mt-2 text-xs text-center">Hustle strategy = generating general advantages to produce the stream of specific advantages needed to compete immediately.</div>
     </Card>
-
-    <Card title="Scope Combinations (Ch.3, Fig 3.1)" cn="範疇組合矩陣" color="slate">
-      <div className="grid grid-cols-2 gap-3"><div className="grid grid-cols-2 gap-1 text-xs">{["Local Diversifier","Global Diversifier","Local Specialist","Global Specialist"].map(s=>(<div key={s} className="bg-slate-100 border rounded p-2 text-center">{s}</div>))}</div><div className="grid grid-cols-2 gap-1 text-xs">{["Local Broadline","Global Broadline","Local Focus","Global Focus"].map(s=>(<div key={s} className="bg-slate-100 border rounded p-2 text-center">{s}</div>))}</div></div>
-      <div className="mt-2 text-xs text-slate-500">No single right scope. Optimal depends on industry, geography, and firm strategy.</div>
-    </Card>
-
     <Card title="Activities & Resources Lists (Lecture Ch.3)" cn="活動與資源清單" color="green">
       <div className="grid grid-cols-2 gap-3 text-xs">
         <div><div className="font-semibold text-green-700 mb-1">Activities 活動:</div><div className="flex flex-wrap gap-1">{["Product/Service Dev","Production","Logistics","Sales & Marketing","Customer Service","Accounting","Finance","HR Management","Strategy Setting"].map(a=>(<span key={a} className="bg-green-50 border border-green-200 rounded px-1.5 py-0.5">{a}</span>))}</div></div>
         <div><div className="font-semibold text-green-700 mb-1">Resources 資源:</div><div className="flex flex-wrap gap-1">{["Natural Resources","Financial Resources","Human Resources","Physical Assets","Locations","Patents","Brands","Reputation","Org Resources"].map(r=>(<span key={r} className="bg-green-50 border border-green-200 rounded px-1.5 py-0.5">{r}</span>))}</div></div>
       </div>
     </Card>
-
     <Card title="Signals of Value (Ch.3)" cn="價值訊號——影響顧客願付價格" color="rose">
       <div className="flex flex-wrap gap-1 text-xs">{["Brands","Installed base / existing customers","Celebrity endorsements","Awards (industry, trade)","Independent certification (ISO, etc.)","Price as signal of quality","Customer education"].map(s=>(<span key={s} className="bg-rose-50 border border-rose-200 rounded px-2 py-1">{s}</span>))}</div>
-      <div className="mt-2 text-xs text-slate-500">Price can signal exclusivity — raising price can sometimes increase sales (e.g., NZ wine, luxury goods).</div>
     </Card>
   </div>);
 }
@@ -349,13 +423,14 @@ function IndustryTab() {
   return (<div>
     <SectionTitle cn="產業層級分析——互動圖表 + 詳細參考">Industry-Level Analysis (Ch.4)</SectionTitle>
 
-    {/* ★ INTERACTIVE: What Is An Industry ★ */}
+    {/* ★ EXPANDED: Industry Definition with 3-step method */}
     <InteractiveWhatIsIndustry />
 
-    {/* ★ INTERACTIVE: Industry Detail ★ */}
-    <InteractiveIndustryDetail />
+    {/* ★ NEW: Industry Economics dynamic analysis */}
+    <InteractiveIndustryEconomics />
 
-    {/* ★ INTERACTIVE: Competition Spectrum ★ */}
+    {/* Industry Detail & Competition */}
+    <InteractiveIndustryDetail />
     <InteractiveCompetition />
 
     {/* ─── Detailed Reference Cards ─── */}
@@ -419,14 +494,9 @@ function MesoCluster() {
       <div className="bg-red-100 border border-red-300 rounded p-3 text-center">
         <div className="font-bold text-red-800 text-sm">Where is value GENERATED, APPROPRIATED, and DEFENDED?</div>
         <div className="text-xs text-red-700 mt-1">價值在哪裡被創造、攫取、守住？</div>
-        <div className="text-xs text-slate-600 mt-2">"Asset light" and ecosystem strategies can be dangerous if firms don't understand this.</div>
       </div>
     </Card>
     <Card title={'"It\'s a Wonderful Life" Test'} cn="如果這個角色不存在，世界會如何？" color="purple"><div className="text-xs">Imagine removing a player from the ecosystem. If the industry/firm would be significantly worse off without them, that player has substantial power. If the industry barely notices, they do not.</div></Card>
-    <Card title='"When Will Buyers Get the Value?"' cn="買方何時會取得價值？" color="amber">
-      <div className="text-xs space-y-1"><div>→ When we do NOT bring substantial value to the table</div><div>→ When we do NOT bring something unique</div><div>→ When the pie WITH us is not much higher than WITHOUT us</div><div>→ When we need them more than they need us</div><div>→ When they can demand a price decrease and we cannot resist</div><div>→ Buyer industry far from perfect competition → buyers have power</div><div>→ Buyer industry close to perfect competition → buyers have little power</div></div>
-      <div className="mt-2 text-xs text-slate-500 italic">Same logic applies in reverse for supplier power.</div>
-    </Card>
     <Card title="Meso Driver Checklist" cn="Meso driver 清單" color="cyan"><div className="grid grid-cols-2 gap-1 text-xs">{["Demand & Customers","Inputs & Suppliers","Shared Resources","Shared Activities","Complementarities","Substitutes","Meso Policies","Meso Institutions"].map(d=>(<div key={d} className="bg-white border rounded p-2 text-center">{d}</div>))}</div></Card>
   </div>);
 }
@@ -437,7 +507,6 @@ function MacroMeta() {
     <Card title="MACRO / NATIONAL (Ch.6)" cn="國家層級" color="blue">
       <div className="grid grid-cols-2 gap-2 mb-3">{[{t:"Macroeconomics",d:"Demand, fiscal, inflation, rates, exchange, unemployment"},{t:"Gov't Policies",d:"Monetary, fiscal, tax, industrial, trade, education, S&T, competition, IP, regulatory"},{t:"Institutions",d:"Design (policy bureaus) · Support (education, research) · Governance (legal, regulatory, admin)"},{t:"Civil Society",d:"Social structures, attitudes, cultural attributes, stability"}].map(x=>(<div key={x.t} className="bg-blue-50 border rounded p-3"><div className="font-bold text-blue-700 text-sm">{x.t}</div><div className="text-xs text-slate-600 mt-1">{x.d}</div></div>))}</div>
       <div className="bg-amber-50 border border-amber-300 rounded p-3 text-xs"><strong>Ch.6 Lecture Notes:</strong> Look at <Tag color="amber">Levels</Tag> <Tag color="amber">Trends</Tag> <Tag color="amber">Disruption</Tag> <Tag color="amber">Non-linear change</Tag></div>
-      <div className="mt-2 text-xs text-slate-500"><strong>Two-edged sword:</strong> Good macro helps all firms; some firms profit from frictions in weak environments.</div>
     </Card>
     <Card title="META / SUPRANATIONAL (Ch.7)" cn="超國家層級" color="purple"><div className="grid grid-cols-3 gap-1 text-xs mb-3">{["Geopolitics","Global Technology","Global Economics","Social & Environmental","Multilateral Orgs (WTO, WB, IMF)","Trade Blocs (EU, USMCA, RCEP)","Foreign Governments","Int'l Financial Flows (FDI, portfolio)","Foreign MNCs","Other Groups (NGOs)"].map(d=>(<div key={d} className="bg-purple-50 border rounded p-2 text-center">{d}</div>))}</div></Card>
     <Card title="Writing Standard for Macro & Meta" cn="作答標準" color="red">
@@ -501,20 +570,17 @@ function CramSheet() {
     <div className="bg-slate-900 text-white rounded-xl p-5 mb-4">
       <div className="text-center font-bold text-xl mb-4 text-yellow-300">17 THINGS TO KNOW COLD</div>
       <div className="space-y-2">
-        {[["1","Performance is RELATIVE","績效是相對的","blue"],["2","Comprehensive, integrative, dynamic, question-based","全面、整合、動態、問題導向","blue"],["3","Five levels. At each: positive or negative?","五層。每層：正面還是負面？","blue"],["4","Levels AND trends","水準與趨勢","blue"],["5","Industry = similar form + function + direct competition","產業＝形式功能相近＋直接競爭","amber"],["6","Full positioning = price AND cost","完整定位＝價格加成本","green"],["7","SPARK: Scope, Positioning, Activities, Resources, Knowledge","SPARK","green"],["8","VRIO extends to ARK in SPARK","VRIO延伸到SPARK中的ARK","purple"],["9","Complementors EXPAND; substitutes CONTRACT demand","互補擴張，替代壓縮","cyan"],["10","Ecosystems: where is value generated, appropriated, defended?","價值在哪裡創造、攫取、守住？","red"],["11","Macro: levels, trends, disruption, non-linearity","總體：水準、趨勢、衝擊、非線性","blue"],["12","Q2 Home Alone: THE PART → THE KID → THE FRANCHISE","","green"],["13","Q3 ETA: 5yr, CHF 10M, 33% by 2019, movements more concentrated","","amber"],["14","Barriers to entry/exit allow profit differences to PERSIST","進入退出障礙使利潤差異持續","purple"],["15","Competitor Envelope Analysis: what if competitors optimize?","競爭者包絡線：如果他們變強呢？","rose"],["16","General vs. Specific advantages → explains hustle logic","一般性 vs. 特定性優勢","cyan"],["17",'"It\'s a Wonderful Life" test: remove a player, does it matter?',"移除一個角色，會有影響嗎？","purple"]].map(([n,en,cn,c])=>{
+        {[["1","Performance is RELATIVE","績效是相對的","blue"],["2","Comprehensive, integrative, dynamic, question-based","全面、整合、動態、問題導向","blue"],["3","Five levels: Industry → Meso → Macro → Meta → Firm","分析順序：產業→群聚→國家→超國家→企業","blue"],["4","Levels AND trends","水準與趨勢","blue"],["5","Industry = useful output to customer + direct competition","產業＝客戶收到的有用輸出＋直接競爭","amber"],["6","Full positioning = price AND cost","完整定位＝價格加成本","green"],["7","SPARK: Scope, Positioning, Activities, Resources, Knowledge","SPARK","green"],["8","VRIO extends to ARK in SPARK","VRIO延伸到SPARK中的ARK","purple"],["9","Complementors EXPAND; substitutes CONTRACT demand","互補擴張，替代壓縮","cyan"],["10","Ecosystems: where is value generated, appropriated, defended?","價值在哪裡創造、攫取、守住？","red"],["11","Macro: levels, trends, disruption, non-linearity","總體：水準、趨勢、衝擊、非線性","blue"],["12","Q2 Home Alone: THE PART → THE KID → THE FRANCHISE","","green"],["13","Q3 ETA: 5yr, CHF 10M, 33% by 2019, movements more concentrated","","amber"],["14","Barriers to entry/exit allow profit differences to PERSIST","進入退出障礙使利潤差異持續","purple"],["15","Industry Economics: WHY possible, WHERE from, WHAT shifts it","產業經濟：為何有可能、來源、何時變動","rose"],["16","General vs. Specific advantages → explains hustle logic","一般性 vs. 特定性優勢","cyan"],["17",'"It\'s a Wonderful Life" test: remove a player, does it matter?',"移除一個角色，會有影響嗎？","purple"]].map(([n,en,cn,c])=>{
           const colors={blue:"bg-blue-800",green:"bg-green-800",amber:"bg-amber-800",purple:"bg-purple-800",red:"bg-red-800",cyan:"bg-cyan-800",rose:"bg-rose-800"};
           return(<div key={n} className={`${colors[c]} rounded-lg px-4 py-2 flex items-center gap-3`}><div className="bg-white text-slate-900 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">{n}</div><div className="flex-1"><span className="font-semibold text-sm">{en}</span>{cn&&<span className="text-xs text-slate-300 ml-2">{cn}</span>}</div></div>);
         })}
       </div>
     </div>
     <Card title="Mistakes That Cost Points" cn="最容易失分的錯誤" color="red">
-      <div className="grid grid-cols-2 gap-2 text-xs">{["Industry by tech, not useful output","Performance as absolute, not relative","Static analysis, no trends","Levels listed without HOW/WHY mechanism","Meso confused with micro",'"Better resources" without WTP/cost effect',"Positioning from price alone or cost alone","Unsupported case detail not in files"].map(m=>(<div key={m} className="flex items-start gap-1"><span className="text-red-500 flex-shrink-0">✗</span><span>{m}</span></div>))}</div>
+      <div className="grid grid-cols-2 gap-2 text-xs">{["Industry by tech, not useful output","Performance as absolute, not relative","Static analysis, no trends","Levels listed without HOW/WHY mechanism","Meso confused with micro",'"Better resources" without WTP/cost effect',"Positioning from price alone or cost alone","Industry economics as snapshot, not dynamic structure"].map(m=>(<div key={m} className="flex items-start gap-1"><span className="text-red-500 flex-shrink-0">✗</span><span>{m}</span></div>))}</div>
     </Card>
     <Card title="Final 60-Minute Review Plan" cn="考前最後60分鐘複習計劃" color="green">
-      <div className="space-y-3">{[{t:"0–15 min",a:"MEMORIZE",d:"17 items above. Performance is relative. Five levels + drivers. SPARK. ARK in SPARK. Price + cost. Complements vs substitutes."},{t:"15–30 min",a:"WRITE FROM MEMORY",d:"Five levels + all drivers. Competition spectrum. Macro institutions (design/support/governance). Home Alone: part/kid/franchise. ETA: 5yr/10M/33%/more concentrated."},{t:"30–45 min",a:"PRACTICE 3 MINI-ANSWERS",d:"One Five-Level answer. One VRIO/ARK answer. One ETA answer. Each 6–8 sentences."},{t:"45–60 min",a:"CHECK ONLY TWO THINGS",d:"Did I explain HOW? Did I explain WHY?"}].map(p=>(<div key={p.t} className="bg-green-50 border border-green-200 rounded-lg p-3"><div className="flex items-center gap-2 mb-1"><Tag color="green">{p.t}</Tag><span className="font-bold text-green-800 text-sm">{p.a}</span></div><div className="text-xs text-slate-700">{p.d}</div></div>))}</div>
-    </Card>
-    <Card title="Final Checklist" cn="最後確認清單" color="amber">
-      <div className="space-y-2 text-xs">{["Identify 3 more cases from Sessions 1–8 for Q1 (biggest gap)","Prepare for unknown Q4 (Five Levels + SPARK on unfamiliar scenario)","Verify Seiko details against your own case copy","Write from memory: five levels + drivers + SPARK + competition types + HA sequence + ETA facts","Practice 3 mini-answers (one per question type)","Every answer: HOW? and WHY?"].map((c,i)=>(<div key={i} className="flex items-start gap-2"><div className="w-4 h-4 border-2 border-amber-400 rounded flex-shrink-0 mt-0.5"></div><span>{c}</span></div>))}</div>
+      <div className="space-y-3">{[{t:"0–15 min",a:"MEMORIZE",d:"17 items above. Analysis sequence: Industry→Meso→Macro→Meta→Firm. SPARK. ARK in SPARK. Price + cost."},{t:"15–30 min",a:"WRITE FROM MEMORY",d:"Five levels + all drivers. 3-step industry definition. Industry economics 3 questions. Competition spectrum. Home Alone sequence. ETA facts."},{t:"30–45 min",a:"PRACTICE 3 MINI-ANSWERS",d:"One Five-Level answer. One VRIO/ARK answer. One ETA answer. Each 6–8 sentences."},{t:"45–60 min",a:"CHECK ONLY TWO THINGS",d:"Did I explain HOW? Did I explain WHY?"}].map(p=>(<div key={p.t} className="bg-green-50 border border-green-200 rounded-lg p-3"><div className="flex items-center gap-2 mb-1"><Tag color="green">{p.t}</Tag><span className="font-bold text-green-800 text-sm">{p.a}</span></div><div className="text-xs text-slate-700">{p.d}</div></div>))}</div>
     </Card>
     <div className="bg-slate-100 rounded-lg p-4 text-center">
       <div className="font-bold text-slate-800 text-sm mb-1">The reflex to bring into the exam room:</div>
@@ -534,7 +600,7 @@ export default function App() {
     <div className="bg-white min-h-screen">
       <div className="bg-slate-900 text-white px-4 py-3">
         <div className="text-lg font-bold">STRT 6200 Midterm Study Guide</div>
-        <div className="text-xs text-slate-400">Enhanced Edition · March 11, 2026 · Closed Book</div>
+        <div className="text-xs text-slate-400">Enhanced v2 · Structural Update · March 11, 2026 · Closed Book</div>
       </div>
       <div className="overflow-x-auto border-b bg-slate-50">
         <div className="flex min-w-max">{tabs.map(t=>(<button key={t} onClick={()=>setTab(t)} className={`px-3 py-2 text-xs font-semibold whitespace-nowrap border-b-2 transition-colors ${tab===t?"border-blue-600 text-blue-700 bg-white":"border-transparent text-slate-500 hover:text-slate-700 hover:bg-slate-100"}`}>{t}</button>))}</div>
