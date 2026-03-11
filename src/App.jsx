@@ -32,10 +32,9 @@ const IH = ({ children }) => <div style={{fontSize:18,fontWeight:800,textAlign:"
 const ISub = ({ children }) => <p style={{fontSize:12,color:"#94a3b8",margin:"0 0 14px",textAlign:"center",fontStyle:"italic"}}>{children}</p>;
 
 /* ─── INTERACTIVE PENTAGON ───
-   ★ STRUCTURAL CHANGE #1: Analysis sequence reordered to
-   Industry → Meso → Macro → Meta → Firm
-   (Professor Enright's preferred classroom sequence)
-   Pentagon GEOMETRY unchanged; card listing order changed.
+   ★ STRUCTURAL CHANGE #1: Professor's analysis sequence
+   Industry(①) → Meso(②) → Macro(③) → Meta(④) → Firm(⑤)
+   Pentagon shape unchanged (textbook standard), but numbering reflects analytical order
 ─── */
 function InteractivePentagon() {
   const [hover, setHover] = useState(null);
@@ -56,7 +55,7 @@ function InteractivePentagon() {
 
   return (<div>
     <IH>Drivers of Firm Performance 企業績效驅動因素</IH>
-    <ISub>分析順序：Industry → Meso → Macro → Meta → Firm（教授課堂順序）</ISub>
+    <ISub>教授分析順序：產業→群聚→國家→超國家→企業 · 互動式：懸停或點擊各層級</ISub>
     <div style={{background:"#fff",borderRadius:16,padding:16,boxShadow:"0 4px 20px rgba(0,0,0,0.06)",marginBottom:14,display:"flex",justifyContent:"center"}}>
       <svg viewBox="0 0 300 296" style={{width:"100%",maxWidth:300,height:"auto"}}>
         <defs><radialGradient id="fpg" cx="50%" cy="48%" r="55%"><stop offset="0%" stopColor="#fff"/><stop offset="100%" stopColor="#f1f5f9"/></radialGradient><filter id="fpds"><feDropShadow dx="0" dy="3" stdDeviation="4" floodOpacity="0.1"/></filter></defs>
@@ -68,11 +67,6 @@ function InteractivePentagon() {
         <text x={cx} y={cy-3} textAnchor="middle" fontSize="10" fontWeight="600" fill="#94a3b8">Firm</text>
         <text x={cx} y={cy+10} textAnchor="middle" fontSize="12" fontWeight="800" fill="#0f172a">Performance</text>
       </svg>
-    </div>
-    {/* Analysis sequence banner */}
-    <div style={{background:"linear-gradient(135deg,#1e293b,#334155)",borderRadius:12,padding:"12px 16px",marginBottom:12,display:"flex",alignItems:"center",justifyContent:"center",gap:6,flexWrap:"wrap"}}>
-      {["Industry","→","Meso","→","Macro","→","Meta","→","Firm"].map((s,i)=>s==="→"?<span key={i} style={{color:"#94a3b8",fontSize:16}}>→</span>:<span key={i} style={{color:i===0?"#fbbf24":"#e2e8f0",fontSize:13,fontWeight:i===0?800:600,background:i===0?"rgba(251,191,36,0.15)":"transparent",padding:i===0?"2px 8px":"0",borderRadius:6}}>{s}</span>)}
-      <span style={{color:"#94a3b8",fontSize:11,marginLeft:8}}>教授分析順序</span>
     </div>
     <div style={{display:"flex",flexDirection:"column",gap:8}}>
       {levels.map(lv=>{const isH=hover===lv.key;return(
@@ -116,12 +110,12 @@ function InteractiveFirmLevel() {
 }
 
 /* ─── INTERACTIVE WHAT IS INDUSTRY ───
-   ★ STRUCTURAL CHANGE #2: Expanded with 3-step "useful output" methodology
+   ★ STRUCTURAL CHANGE #2: 「有用輸出」三步定義法
 ─── */
 function InteractiveWhatIsIndustry() {
   return (<div style={{marginBottom:16}}>
     <IH>What Constitutes an Industry? 何謂產業？</IH>
-    <ISub>這是整個 Five Levels 分析的錨點——定義錯，後面全錯</ISub>
+    <ISub>界定競爭的範圍 Defining the boundaries of competition</ISub>
 
     {/* ★ NEW: 3-step useful output methodology */}
     <div style={{background:"linear-gradient(135deg,#1e40af,#2563eb)",borderRadius:14,padding:"18px 16px",marginBottom:14,color:"#fff",boxShadow:"0 4px 20px rgba(37,99,235,0.2)"}}>
@@ -144,7 +138,7 @@ function InteractiveWhatIsIndustry() {
       </div>
     </div>
 
-    {/* Original "includes" section */}
+    {/* Original definition section */}
     <div style={{background:"#fff",borderRadius:14,border:"2px solid #2563eb22",padding:"16px 14px",marginBottom:12,boxShadow:"0 2px 12px rgba(37,99,235,0.06)"}}>
       <div style={{display:"flex",alignItems:"center",marginBottom:10}}>
         <div style={{width:26,height:26,borderRadius:8,background:"linear-gradient(135deg,#2563eb,#3b82f6)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:13,fontWeight:700,marginRight:10,flexShrink:0}}>✓</div>
@@ -346,7 +340,7 @@ function Overview() {
 
 function FiveLevels() {
   return (<div>
-    <SectionTitle cn="五層架構——依教授課堂分析順序排列">The Five-Level Framework</SectionTitle>
+    <SectionTitle cn="五層架構——互動圖表 + 詳細參考">The Five-Level Framework</SectionTitle>
     <div className="mb-6"><InteractivePentagon /></div>
     <Card title="Three Critical Insights (Ch.2)" cn="三大洞察" color="blue">
       <div className="grid grid-cols-3 gap-2">
@@ -374,11 +368,7 @@ function SparkPosition() {
       <div className="space-y-2">
         {[{l:"S",w:"cope",q:"WHERE do we compete?",cn:"在哪裡？",d:"Industries, segments, geography",c:"bg-green-700"},{l:"P",w:"ositioning",q:"HOW do we compete?",cn:"怎麼競爭？",d:"Price/performance + cost + vs. competitors",c:"bg-green-600"},{l:"A",w:"ctivities",q:"What do we DO?",cn:"做什麼？",d:"Tasks to serve customers",c:"bg-emerald-700"},{l:"R",w:"esources",q:"What do we HAVE?",cn:"有什麼？",d:"Brands, patents, workforce, facilities, financial",c:"bg-emerald-600"},{l:"K",w:"nowledge",q:"What do we KNOW?",cn:"知道什麼？",d:"Market, tech, competitor, process, organizational",c:"bg-teal-700"}].map(s=>(<div key={s.l} className={`${s.c} rounded-lg p-3 flex items-center gap-3`}><div className="text-3xl font-black text-green-200 w-8">{s.l}</div><div className="flex-1"><div className="flex items-baseline gap-2"><span className="font-bold">{s.l}<span className="font-normal">{s.w}</span></span><span className="text-green-300 text-xs">{s.q} {s.cn}</span></div><div className="text-xs text-green-200 mt-0.5">{s.d}</div></div></div>))}
       </div>
-      <div className="mt-3 grid grid-cols-3 gap-2 text-center text-xs">
-        <div className="bg-green-700 rounded p-2"><strong>S</strong> determines WHERE</div>
-        <div className="bg-green-700 rounded p-2"><strong>P + A</strong> determine HOW</div>
-        <div className="bg-green-700 rounded p-2"><strong>R + K</strong> determine WITH WHAT</div>
-      </div>
+      <div className="mt-3 grid grid-cols-3 gap-2 text-center text-xs"><div className="bg-green-700 rounded p-2"><strong>S</strong> determines WHERE</div><div className="bg-green-700 rounded p-2"><strong>P + A</strong> determine HOW</div><div className="bg-green-700 rounded p-2"><strong>R + K</strong> determine WITH WHAT</div></div>
       <div className="mt-2 text-center text-xs text-green-300">High-performing firms often have a distinctive SPARK.</div>
     </div>
     <Card title="Positioning: The Full Picture (Ch.3)" cn="定位分析——最容易考、最容易寫錯" color="red">
@@ -400,12 +390,18 @@ function SparkPosition() {
       <div className="grid grid-cols-3 gap-2 text-xs">
         {[{t:"Commitment",d:"Large investment → long-term advantage",ex:"Chemicals, pharma, oil, mining"},{t:"Hustle",d:"Stream of temporary advantages, move fast",ex:"Motion pictures, fashion, trading, some tech"},{t:"Real Options",d:"Stay in game without big commitment",ex:"High uncertainty + irreversibility"}].map(s=>(<div key={s.t} className="bg-white border rounded p-3"><div className="font-bold text-cyan-700">{s.t}</div><div className="mt-1">{s.d}</div><div className="mt-1 text-slate-500 italic">{s.ex}</div></div>))}
       </div>
+      <div className="mt-2 text-xs text-slate-500"><strong>Time pacing:</strong> New products on set schedule. Fashion 2x/yr; PC every 6 mo.</div>
     </Card>
     <Card title="General vs. Specific Competitive Advantages (Ch.3)" cn="一般性 vs. 特定性競爭優勢" color="amber">
       <div className="grid grid-cols-2 gap-3 text-xs">
         <div className="bg-amber-50 border rounded p-3"><div className="font-bold text-amber-700 mb-1">General 一般性</div><div>Built up over time: R&D capabilities, brands, manufacturing excellence.</div></div>
         <div className="bg-amber-50 border rounded p-3"><div className="font-bold text-amber-700 mb-1">Specific 特定性</div><div>Why the company succeeds or fails TODAY in a specific industry, with specific customers, against specific competitors.</div></div>
       </div>
+      <div className="mt-2 text-xs text-center">Hustle strategy = generating general advantages to produce the stream of specific advantages needed to compete immediately.</div>
+    </Card>
+    <Card title="Scope Combinations (Ch.3, Fig 3.1)" cn="範疇組合矩陣" color="slate">
+      <div className="grid grid-cols-2 gap-3"><div className="grid grid-cols-2 gap-1 text-xs">{["Local Diversifier","Global Diversifier","Local Specialist","Global Specialist"].map(s=>(<div key={s} className="bg-slate-100 border rounded p-2 text-center">{s}</div>))}</div><div className="grid grid-cols-2 gap-1 text-xs">{["Local Broadline","Global Broadline","Local Focus","Global Focus"].map(s=>(<div key={s} className="bg-slate-100 border rounded p-2 text-center">{s}</div>))}</div></div>
+      <div className="mt-2 text-xs text-slate-500">No single right scope. Optimal depends on industry, geography, and firm strategy.</div>
     </Card>
     <Card title="Activities & Resources Lists (Lecture Ch.3)" cn="活動與資源清單" color="green">
       <div className="grid grid-cols-2 gap-3 text-xs">
@@ -415,6 +411,7 @@ function SparkPosition() {
     </Card>
     <Card title="Signals of Value (Ch.3)" cn="價值訊號——影響顧客願付價格" color="rose">
       <div className="flex flex-wrap gap-1 text-xs">{["Brands","Installed base / existing customers","Celebrity endorsements","Awards (industry, trade)","Independent certification (ISO, etc.)","Price as signal of quality","Customer education"].map(s=>(<span key={s} className="bg-rose-50 border border-rose-200 rounded px-2 py-1">{s}</span>))}</div>
+      <div className="mt-2 text-xs text-slate-500">Price can signal exclusivity — raising price can sometimes increase sales (e.g., NZ wine, luxury goods).</div>
     </Card>
   </div>);
 }
@@ -422,18 +419,13 @@ function SparkPosition() {
 function IndustryTab() {
   return (<div>
     <SectionTitle cn="產業層級分析——互動圖表 + 詳細參考">Industry-Level Analysis (Ch.4)</SectionTitle>
-
-    {/* ★ EXPANDED: Industry Definition with 3-step method */}
     <InteractiveWhatIsIndustry />
+    <InteractiveIndustryDetail />
+    <InteractiveCompetition />
 
     {/* ★ NEW: Industry Economics dynamic analysis */}
     <InteractiveIndustryEconomics />
 
-    {/* Industry Detail & Competition */}
-    <InteractiveIndustryDetail />
-    <InteractiveCompetition />
-
-    {/* ─── Detailed Reference Cards ─── */}
     <div className="mt-2 mb-3 text-center"><span className="text-xs font-bold text-slate-400 uppercase tracking-widest">▼ Detailed Reference 詳細參考 ▼</span></div>
 
     <Card title="Industry Definition — CRITICAL" cn="產業定義——極為關鍵" color="red">
@@ -446,12 +438,10 @@ function IndustryTab() {
         <div className="bg-red-50 border border-red-300 rounded p-2">✗ Amazon + Microsoft + Meta ≠ same industry (different primary outputs)</div>
       </div>
     </Card>
-
     <Card title="Conditions for Perfect Competition" cn="完全競爭條件（偏離即解釋利潤）" color="slate">
       <div className="grid grid-cols-2 gap-1 text-xs">{["No entry/exit barriers","Homogeneous products","No brands","No scale/scope/learning economies","No preferential relationships","No informational asymmetries","No transportation costs","No collusion"].map(c=>(<div key={c} className="flex items-center gap-1"><span className="text-red-500">✗</span> {c}</div>))}</div>
       <div className="mt-2 text-xs font-semibold text-center">Departures from these conditions → explain why profits exist</div>
     </Card>
-
     <Card title="Barriers to Entry & Exit (Ch.4)" cn="進入與退出障礙——利潤差異持續的原因" color="purple">
       <div className="grid grid-cols-2 gap-3 text-xs">
         <div><div className="font-semibold text-purple-700 mb-1">Entry Barriers 進入障礙:</div><ul className="space-y-0.5 list-disc list-inside"><li>Economies of scale, learning, scope</li><li>Brands and differentiation</li><li>Patents and government regulation</li><li>Access to inputs or distribution</li><li>Expected retaliation from incumbents</li></ul></div>
@@ -459,17 +449,14 @@ function IndustryTab() {
       </div>
       <div className="mt-2 bg-purple-50 border border-purple-300 rounded p-2 text-xs text-center font-semibold">"Barriers to entry and exit allow differences in the profitability of industries to persist" (Ch.4 Takeaway)</div>
     </Card>
-
     <Card title="Table 4.3: Features by Competition Type (Ch.4)" cn="各競爭型態的特徵對照" color="slate">
       <div className="overflow-x-auto"><table className="w-full text-xs"><thead><tr className="bg-slate-100"><th className="text-left p-1">Feature</th><th className="p-1">Subsidized</th><th className="p-1">Perfect</th><th className="p-1">Hyper</th><th className="p-1">Oligopoly</th><th className="p-1">Monopoly</th></tr></thead>
       <tbody className="divide-y">{[["Entry","Subsidized","Free","Feasible","Limited","No entry"],["Products","Inferior may succeed","Homogeneous","Distinguishable briefly","Distinguishable long","Unique"],["Brands","Subsidies overcome","None","Temporary","Sustained","Unique"],["Scale/Scope/Learning","Subsidies overcome","None","Limited","Potentially large","Very large"],["Customer relations","Subsidies overcome","None","Temporary adv.","Sustained adv.","Exclusive"],["Info asymmetries","Subsidies overcome","None","Temporary","Sustained","Complete"],["Collusion","Not specified","None","Little","Possible","Total"],["Profit","Very low","Low","Low-moderate","Pot. high sustained","High sustained"]].map(([f,...vs])=>(<tr key={f}><td className="p-1 font-semibold">{f}</td>{vs.map((v,i)=><td key={i} className="p-1 text-center">{v}</td>)}</tr>))}</tbody></table></div>
     </Card>
-
     <Card title="Competitor Envelope Analysis — CEA (Ch.4)" cn="競爭者包絡線分析" color="rose">
       <div className="text-xs mb-2">Assess competitors as they <strong>might be</strong>, not just as they are today. "They do strategy too."</div>
       <div className="grid grid-cols-2 gap-1 text-xs">{["What if competitors optimized their activities?","What if they fully leveraged resources & knowledge?","What if they overcame strategic shortcomings?","What if taken over by savvy, deep-pocketed firms?","What would WE do if we managed the competitors?","Also: look for unmet demand / underserved segments"].map(q=>(<div key={q} className="bg-rose-50 border rounded p-1.5">{q}</div>))}</div>
     </Card>
-
     <Card title="Competition on Quality vs. Price (Lecture Ch.4)" cn="品質競爭 vs. 價格競爭" color="green">
       <div className="text-xs text-center font-semibold">"Competition based on quality, features, etc. generally leads to better industry profitability than competition solely on price."</div>
     </Card>
@@ -494,9 +481,14 @@ function MesoCluster() {
       <div className="bg-red-100 border border-red-300 rounded p-3 text-center">
         <div className="font-bold text-red-800 text-sm">Where is value GENERATED, APPROPRIATED, and DEFENDED?</div>
         <div className="text-xs text-red-700 mt-1">價值在哪裡被創造、攫取、守住？</div>
+        <div className="text-xs text-slate-600 mt-2">"Asset light" and ecosystem strategies can be dangerous if firms don't understand this.</div>
       </div>
     </Card>
     <Card title={'"It\'s a Wonderful Life" Test'} cn="如果這個角色不存在，世界會如何？" color="purple"><div className="text-xs">Imagine removing a player from the ecosystem. If the industry/firm would be significantly worse off without them, that player has substantial power. If the industry barely notices, they do not.</div></Card>
+    <Card title='"When Will Buyers Get the Value?"' cn="買方何時會取得價值？" color="amber">
+      <div className="text-xs space-y-1"><div>→ When we do NOT bring substantial value to the table</div><div>→ When we do NOT bring something unique</div><div>→ When the pie WITH us is not much higher than WITHOUT us</div><div>→ When we need them more than they need us</div><div>→ When they can demand a price decrease and we cannot resist</div><div>→ Buyer industry far from perfect competition → buyers have power</div><div>→ Buyer industry close to perfect competition → buyers have little power</div></div>
+      <div className="mt-2 text-xs text-slate-500 italic">Same logic applies in reverse for supplier power.</div>
+    </Card>
     <Card title="Meso Driver Checklist" cn="Meso driver 清單" color="cyan"><div className="grid grid-cols-2 gap-1 text-xs">{["Demand & Customers","Inputs & Suppliers","Shared Resources","Shared Activities","Complementarities","Substitutes","Meso Policies","Meso Institutions"].map(d=>(<div key={d} className="bg-white border rounded p-2 text-center">{d}</div>))}</div></Card>
   </div>);
 }
@@ -507,6 +499,7 @@ function MacroMeta() {
     <Card title="MACRO / NATIONAL (Ch.6)" cn="國家層級" color="blue">
       <div className="grid grid-cols-2 gap-2 mb-3">{[{t:"Macroeconomics",d:"Demand, fiscal, inflation, rates, exchange, unemployment"},{t:"Gov't Policies",d:"Monetary, fiscal, tax, industrial, trade, education, S&T, competition, IP, regulatory"},{t:"Institutions",d:"Design (policy bureaus) · Support (education, research) · Governance (legal, regulatory, admin)"},{t:"Civil Society",d:"Social structures, attitudes, cultural attributes, stability"}].map(x=>(<div key={x.t} className="bg-blue-50 border rounded p-3"><div className="font-bold text-blue-700 text-sm">{x.t}</div><div className="text-xs text-slate-600 mt-1">{x.d}</div></div>))}</div>
       <div className="bg-amber-50 border border-amber-300 rounded p-3 text-xs"><strong>Ch.6 Lecture Notes:</strong> Look at <Tag color="amber">Levels</Tag> <Tag color="amber">Trends</Tag> <Tag color="amber">Disruption</Tag> <Tag color="amber">Non-linear change</Tag></div>
+      <div className="mt-2 text-xs text-slate-500"><strong>Two-edged sword:</strong> Good macro helps all firms; some firms profit from frictions in weak environments.</div>
     </Card>
     <Card title="META / SUPRANATIONAL (Ch.7)" cn="超國家層級" color="purple"><div className="grid grid-cols-3 gap-1 text-xs mb-3">{["Geopolitics","Global Technology","Global Economics","Social & Environmental","Multilateral Orgs (WTO, WB, IMF)","Trade Blocs (EU, USMCA, RCEP)","Foreign Governments","Int'l Financial Flows (FDI, portfolio)","Foreign MNCs","Other Groups (NGOs)"].map(d=>(<div key={d} className="bg-purple-50 border rounded p-2 text-center">{d}</div>))}</div></Card>
     <Card title="Writing Standard for Macro & Meta" cn="作答標準" color="red">
@@ -577,10 +570,13 @@ function CramSheet() {
       </div>
     </div>
     <Card title="Mistakes That Cost Points" cn="最容易失分的錯誤" color="red">
-      <div className="grid grid-cols-2 gap-2 text-xs">{["Industry by tech, not useful output","Performance as absolute, not relative","Static analysis, no trends","Levels listed without HOW/WHY mechanism","Meso confused with micro",'"Better resources" without WTP/cost effect',"Positioning from price alone or cost alone","Industry economics as snapshot, not dynamic structure"].map(m=>(<div key={m} className="flex items-start gap-1"><span className="text-red-500 flex-shrink-0">✗</span><span>{m}</span></div>))}</div>
+      <div className="grid grid-cols-2 gap-2 text-xs">{["Industry by tech, not useful output","Performance as absolute, not relative","Static analysis, no trends","Levels listed without HOW/WHY mechanism","Meso confused with micro",'"Better resources" without WTP/cost effect',"Positioning from price alone or cost alone","Industry economics as static snapshot, not dynamic structure"].map(m=>(<div key={m} className="flex items-start gap-1"><span className="text-red-500 flex-shrink-0">✗</span><span>{m}</span></div>))}</div>
     </Card>
     <Card title="Final 60-Minute Review Plan" cn="考前最後60分鐘複習計劃" color="green">
-      <div className="space-y-3">{[{t:"0–15 min",a:"MEMORIZE",d:"17 items above. Analysis sequence: Industry→Meso→Macro→Meta→Firm. SPARK. ARK in SPARK. Price + cost."},{t:"15–30 min",a:"WRITE FROM MEMORY",d:"Five levels + all drivers. 3-step industry definition. Industry economics 3 questions. Competition spectrum. Home Alone sequence. ETA facts."},{t:"30–45 min",a:"PRACTICE 3 MINI-ANSWERS",d:"One Five-Level answer. One VRIO/ARK answer. One ETA answer. Each 6–8 sentences."},{t:"45–60 min",a:"CHECK ONLY TWO THINGS",d:"Did I explain HOW? Did I explain WHY?"}].map(p=>(<div key={p.t} className="bg-green-50 border border-green-200 rounded-lg p-3"><div className="flex items-center gap-2 mb-1"><Tag color="green">{p.t}</Tag><span className="font-bold text-green-800 text-sm">{p.a}</span></div><div className="text-xs text-slate-700">{p.d}</div></div>))}</div>
+      <div className="space-y-3">{[{t:"0–15 min",a:"MEMORIZE",d:"17 items above. Performance is relative. Five levels + drivers. SPARK. ARK in SPARK. Price + cost. Complements vs substitutes."},{t:"15–30 min",a:"WRITE FROM MEMORY",d:"Five levels + all drivers. Competition spectrum. Macro institutions (design/support/governance). Home Alone: part/kid/franchise. ETA: 5yr/10M/33%/more concentrated."},{t:"30–45 min",a:"PRACTICE 3 MINI-ANSWERS",d:"One Five-Level answer. One VRIO/ARK answer. One ETA answer. Each 6–8 sentences."},{t:"45–60 min",a:"CHECK ONLY TWO THINGS",d:"Did I explain HOW? Did I explain WHY?"}].map(p=>(<div key={p.t} className="bg-green-50 border border-green-200 rounded-lg p-3"><div className="flex items-center gap-2 mb-1"><Tag color="green">{p.t}</Tag><span className="font-bold text-green-800 text-sm">{p.a}</span></div><div className="text-xs text-slate-700">{p.d}</div></div>))}</div>
+    </Card>
+    <Card title="Final Checklist" cn="最後確認清單" color="amber">
+      <div className="space-y-2 text-xs">{["Identify 3 more cases from Sessions 1–8 for Q1 (biggest gap)","Prepare for unknown Q4 (Five Levels + SPARK on unfamiliar scenario)","Verify Seiko details against your own case copy","Write from memory: five levels + drivers + SPARK + competition types + HA sequence + ETA facts","Practice 3 mini-answers (one per question type)","Every answer: HOW? and WHY?"].map((c,i)=>(<div key={i} className="flex items-start gap-2"><div className="w-4 h-4 border-2 border-amber-400 rounded flex-shrink-0 mt-0.5"></div><span>{c}</span></div>))}</div>
     </Card>
     <div className="bg-slate-100 rounded-lg p-4 text-center">
       <div className="font-bold text-slate-800 text-sm mb-1">The reflex to bring into the exam room:</div>
@@ -600,7 +596,7 @@ export default function App() {
     <div className="bg-white min-h-screen">
       <div className="bg-slate-900 text-white px-4 py-3">
         <div className="text-lg font-bold">STRT 6200 Midterm Study Guide</div>
-        <div className="text-xs text-slate-400">Enhanced v2 · Structural Update · March 11, 2026 · Closed Book</div>
+        <div className="text-xs text-slate-400">Enhanced Edition · March 11, 2026 · Closed Book</div>
       </div>
       <div className="overflow-x-auto border-b bg-slate-50">
         <div className="flex min-w-max">{tabs.map(t=>(<button key={t} onClick={()=>setTab(t)} className={`px-3 py-2 text-xs font-semibold whitespace-nowrap border-b-2 transition-colors ${tab===t?"border-blue-600 text-blue-700 bg-white":"border-transparent text-slate-500 hover:text-slate-700 hover:bg-slate-100"}`}>{t}</button>))}</div>
